@@ -36,6 +36,16 @@ function iniciarApp() {
             .then(resultado => mostrarRecetas(resultado.meals))
 
         function mostrarRecetas(recetas = []) {
+
+            // Limpiar HTML si resultado tiene contenido.
+            limpiarHTML(resultado);
+
+            // Mostrar Heading si hubo o no recetas que mostrar
+            const heading = document.createElement('H2');
+            heading.classList.add('text-center', 'text-black', 'my-5');
+            heading.textContent = recetas.length ? 'Resultados' : 'No hay resultados';
+            resultado.appendChild(heading);
+
             // Iterar en los resultados
             recetas.forEach(receta => {
                 const {idMeal, strMeal, strMealThumb} = receta;
@@ -73,6 +83,12 @@ function iniciarApp() {
 
                 resultado.appendChild(recetaContenedor);
             });
+        }
+    }
+
+    function limpiarHTML(selector) {
+        while(selector.firstChild) {
+            selector.removeChild(selector.firstChild)
         }
     }
 }
